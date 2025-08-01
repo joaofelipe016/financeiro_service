@@ -8,26 +8,64 @@ import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.UUID;
 
-@Entity
-@Table(name = "transacao")
 public class Transacao {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE)
-    private UUID transacao_id;
+    private UUID transacaoId;
 
-    @Column
     private String descricao;
 
-    @Column
     private BigDecimal valor;
 
-    @Column
     private LocalDate dataTransacao;
 
-    @Column
     private TipoTransacaoEnum tipoTransacaoEnum;
 
-    @Column
     private CategoriaTransacaoEnum categoriaTransacaoEnum;
+
+    public Transacao(
+            UUID transacaoId,
+            String descricao,
+            BigDecimal valor,
+            LocalDate dataTransacao,
+            TipoTransacaoEnum tipoTransacaoEnum,
+            CategoriaTransacaoEnum categoriaTransacaoEnum
+            ) throws Exception {
+        this.transacaoId = transacaoId;
+        this.descricao = descricao;
+        this.valor = this.valorIsReal(valor);
+        this.dataTransacao = dataTransacao;
+        this.tipoTransacaoEnum = tipoTransacaoEnum;
+        this.categoriaTransacaoEnum = categoriaTransacaoEnum;
+    }
+
+    public UUID getTransacaoId() {
+        return transacaoId;
+    }
+
+    public String getDescricao() {
+        return descricao;
+    }
+
+    public BigDecimal getValor() {
+        return valor;
+    }
+
+    public LocalDate getDataTransacao() {
+        return dataTransacao;
+    }
+
+    public TipoTransacaoEnum getTipoTransacaoEnum() {
+        return tipoTransacaoEnum;
+    }
+
+    public CategoriaTransacaoEnum getCategoriaTransacaoEnum() {
+        return categoriaTransacaoEnum;
+    }
+
+    public BigDecimal valorIsReal(BigDecimal valor) throws Exception {
+        if (valor == null) {
+            throw new Exception("Campo valor está vazio!!");
+        }
+        return valor;
+    }
 }
